@@ -9,15 +9,25 @@
   },
   "scripts": {
     "start": "node server/src/index.js",
-    "dev": "node --watch server/src/index.js",
+    "dev": "concurrently -k -n api,web -c cyan,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "node --watch server/src/index.js",
+    "dev:web": "vite client --config client/vite.config.js",
+    "build": "vite build client --config client/vite.config.js",
+    "preview": "vite preview client --config client/vite.config.js",
     "test": "node --test"
   },
   "dependencies": {
     "better-sqlite3": "^12.2.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "supertest": "^7.1.4"
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.0",
+    "supertest": "^7.1.4",
+    "vite": "^7.0.0"
   }
 }

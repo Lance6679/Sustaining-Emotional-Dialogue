@@ -1,0 +1,1 @@
+export const categories = ['OOP', 'DSA', 'OS', 'Networks', 'DBMS'];

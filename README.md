@@ -1,8 +1,8 @@
 # TechPrep
 
-TechPrep is a technical interview practice app. This first project stage contains the Express and SQLite backend; the React frontend will be added in the next stage.
+TechPrep is a technical interview practice app built with React, Node.js, Express, and SQLite. It combines a question bank, timed practice, flashcards, progress tracking, and interactive concept demos.
 
-## Backend setup
+## Setup and run
 
 Requirements: Node.js 20 or newer and npm.
 
@@ -11,11 +11,11 @@ npm install
 npm run dev
 ```
 
-The API starts at `http://localhost:3000`. On the first start, TechPrep creates `server/data/techprep.sqlite` and inserts the 10 starter questions. The database file is local and ignored by git.
+Open `http://localhost:5173` for the app. The development command starts Vite and the Express API together; the client proxies `/api` requests to the API at `http://localhost:3000`. On the first start, TechPrep creates `server/data/techprep.sqlite` and inserts the 10 starter questions. The database file is local and ignored by git.
 
-For a normal start, run `npm start`. Run the backend tests with `npm test`.
+Useful commands: `npm run dev:api` starts just the API, `npm run dev:web` starts just Vite, `npm run build` creates the production frontend assets, `npm start` starts the API, and `npm test` runs the backend API tests. When running the frontend separately, the API must be available on port 3000.
 
-Set `PORT` to change the listening port, or `DB_PATH` to choose a different SQLite file. For example, `DB_PATH=:memory:` uses a temporary database for a single server process.
+Set `PORT` to change the API port, `DB_PATH` to choose a different SQLite file, or `API_URL` to point Vite's `/api` proxy at another API server. For example, `DB_PATH=:memory:` uses a temporary database for a single server process.
 
 ## Backend structure
 
@@ -23,7 +23,19 @@ Set `PORT` to change the listening port, or `DB_PATH` to choose a different SQLi
 TechPrep/
 |-- README.md
 |-- package.json
+|-- package-lock.json
 |-- .gitignore
+|-- client/
+|   |-- index.html
+|   |-- vite.config.js
+|   `-- src/
+|       |-- App.jsx            # Navigation, dashboard, loading, and quiz state
+|       |-- DemoLab.jsx        # The 10 interactive concept demonstrations
+|       |-- LearningViews.jsx  # Question bank, cards, quizzes, and progress
+|       |-- api.js             # Fetch wrapper for the Express API
+|       |-- constants.js       # Shared topic categories
+|       |-- main.jsx           # React entry point
+|       `-- styles.css         # Responsive app styles
 `-- server/
 		|-- data/                 # Created automatically for the SQLite database
 		|-- src/
@@ -85,4 +97,4 @@ Returns a small service health response.
 | Networks | TCP vs. UDP; URL-to-page-load flow |
 | DBMS | Database normalization to 3NF |
 
-The question records include demo descriptors for all 10 topics, including a hash collision visualizer, two-thread/two-lock deadlock simulation, TCP handshake, and a normalization example. The React interface and actual browser-based demos are the next stage.
+The question bank has category and text filters. Quiz mode runs a timed five-question session with scored feedback; mock interview shuffles all 10 questions into a 15-minute round. Flashcards reveal model answers on flip, and progress highlights practiced topics below 70% accuracy. Each topic has a hands-on demo, including hash collisions, two-thread deadlock, the TCP handshake, and normalization from an unnormalized table to 3NF.
